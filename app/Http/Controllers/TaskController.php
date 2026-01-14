@@ -14,18 +14,23 @@ class TaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'deadline' => 'required|date',
-            'status' => 'required|in:pending,in_progress,completed' 
+            'status' => 'required|in:pending,in_progress,completed',
+            'priority' => 'required|in:low,medium,high', 
         ]);
 
         $project->tasks()->create($validated);
 
-        return redirect()->back(); 
+        return redirect()->back();
     }
 
     public function update(Request $request, Task $task)
     {
         $validated = $request->validate([
-            'status' => 'required|in:pending,in_progress,completed',
+            'title' => 'sometimes|required|string|max:255',
+            'description' => 'nullable|string',
+            'deadline' => 'sometimes|required|date',
+            'status' => 'sometimes|required|in:pending,in_progress,completed',
+            'priority' => 'sometimes|required|in:low,medium,high', 
         ]);
 
         $task->update($validated);
